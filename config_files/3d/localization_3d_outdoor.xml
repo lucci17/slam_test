@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!-- positioning_mode: 0:pure indoor, 1:pure outdoor, 2:indoor to outdoor, 3:outdoor to indoor -->
+<!-- tracking_frame: horizontal_laser_link, imu_link -->
+<SLAM 	map_builder				= "MAP_BUILDER"
+		trajectory_builder		= "TRAJECTORY_BUILDER"
+		map_frame				= "map"
+		tracking_frame			= "imu_link"
+		published_frame 		= "base_link"
+		odom_frame				= "odom"
+		provide_odom_frame		= "true"
+		use_odometry			= "false"
+		use_gps					= "true"
+		num_laser_scans			= "0"
+		num_multi_echo_laser_scans			= "0"
+		num_subdivisions_per_laser_scan		= "1"
+		num_point_clouds				= "1"
+		rangefinder_sampling_ratio		= "1.0"
+		odometry_sampling_ratio			= "1.0"
+		imu_sampling_ratio				= "1.0"
+		rangefinder_sampling_ratio_slow = "1.0"
+		fixed_frame_pose_sampling_ratio = "1.0"
+		configuration_directory			= "config_files/3d"
+		configuration_basename			= "localization_3d_outdoor.lua"
+		positioning_mode 				= "0"
+		pure_mapping_waiting_data_time	= "5"
+		map_filename					= "maps/whole_roof_0720_10cm.map"
+		save_map_filename				= "carto.map"
+		urdf_filename					= "config_files/3d/slam_3d.urdf"
+		initial_pose					= ""
+		pure_mapping					= "false"
+		position_filter_on				= "true"
+		gps_fix_mode_num 				= "4"
+		gps_map_fusion_param			= "image_file.pgm.xml"
+	  >
+	<PCD_OUTPUT	pcd_filename = "whole.pcd"
+				high_resolution = "true"
+				need_voxel_before_output = "true"
+				min_probability = "0.65"
+				voxel_size = "0.05" >
+	</PCD_OUTPUT>
+	<DEBUG_OPTIONS save_cpu_info_file = "false"
+					save_pos_file = "true">
+	</DEBUG_OPTIONS>
+	<!-- ros parameters transfer to app global parameters  -->
+</SLAM>

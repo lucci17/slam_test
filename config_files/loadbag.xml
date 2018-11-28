@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!-- supported imu type: "lpms", "mpu9250" -->
+<!-- supported lidar type: "lslidar_n301", "sick_lms1xx", "robosense_16" -->
+<!-- supported motor type: "maxon", "geek", "double_geek" -->
+<DRIVER 	use_imu				= "true"
+			use_motor			= "false"
+			use_gps				= "false"
+			use_lidar			= "true"
+			use_soft_interrput 	= "false"
+			save_data_bag = 	"false"
+			load_data_bag = 	"true"
+			wait_for_carto = 	"true"
+			imu_dev_path			= "/dev/ttyUSB0"
+			gps_dev_path			= "/dev/ttyUSB0"
+			motor_dev_path1			= "/dev/ttyUSB1"
+			motor_dev_path2			= "/dev/ttyUSB0"
+			data_bag_filaname 		= "sensor_data.bag"
+			load_bag_filename 		= "bags/sensor_data.bag"
+			main_lidar_type			= "robosense_16"
+			the_other_lidar_type	= ""
+			imu_type				= "lpms"
+			motor_type				= "geek"
+			max_secs_waiting_cmd	= "2"
+			imu_update_freq 		= "100"
+			motor_update_freq		= "10"
+			load_bag_percentage		= "100"
+	  >
+	<SickLms1xx	ip = "192.168.0.1"
+				port = "2111">
+	</SickLms1xx>
+	<RoboSense	ip = "192.168.0.2"
+				port = "6699"
+				frame_id = "horizontal_laser_link"
+				angle_path = "config_files/angle.csv"
+				curves_path = "config_files/curves.csv"
+				channel_path = "config_files/ChannelNum.csv"
+				curves_rate_path = ""
+				model 		= "RS16"
+				rpm 		= "600.0"
+				time_offset = "0.0" >
+	</RoboSense>
+</DRIVER>

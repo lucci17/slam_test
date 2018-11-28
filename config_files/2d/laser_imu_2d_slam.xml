@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!-- positioning_mode: 0:pure indoor, 1:pure outdoor, 2:indoor to outdoor, 3:outdoor to indoor -->
+<!-- tracking_frame: horizontal_laser_link, imu_link -->
+<SLAM 	map_builder				= "MAP_BUILDER"
+		trajectory_builder		= "TRAJECTORY_BUILDER"
+		map_frame				= "map"
+		tracking_frame			= "imu_link"
+		published_frame 		= "base_link"
+		odom_frame				= "odom"
+		provide_odom_frame		= "true"
+		use_odometry			= "false"
+		use_gps					= "true"
+		num_laser_scans			= "1"
+		num_multi_echo_laser_scans			= "0"
+		num_subdivisions_per_laser_scan		= "1"
+		num_point_clouds				= "0"
+		rangefinder_sampling_ratio		= "1.0"
+		odometry_sampling_ratio			= "1.0"
+		imu_sampling_ratio				= "1.0"
+		rangefinder_sampling_ratio_slow = "1.0"
+		configuration_directory			= "config_files"
+		configuration_basename			= "revo_lds.lua"
+		positioning_mode 				= "0"
+		map_filename					= "carto.map"
+		urdf_filename					= "config_files/slam_2d.urdf"
+		initial_pose					= ""
+		pure_mapping					= "false"
+		save_position_file				= "false"
+		gps_fix_mode_num 				= "3"
+	  >
+	<GPS_CALCULATE 
+		min_dis_for_directioning 				= "0.5"
+		min_dis_for_trimming 					= "0.15"
+		max_data_count_for_calculating_trans 	= "25" 
+		>
+	</GPS_CALCULATE>
+	<!-- ros parameters transfer to app global parameters  -->
+</SLAM>

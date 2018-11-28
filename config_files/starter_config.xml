@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!-- supported start_state: 0 - "Default", 1 - "Mapping", 2 - "GatheringBaundry" -->
+<STARTER all_process_run_background 	= "true"
+		 server_port 					= "3000"
+		 driver_process_path 			= "./driver"
+		 carto_process_path 			= "./carto"
+		 controller_process_path 		= "~/sbongos/CARTO"
+		 start_state					= "0"
+	>
+	<Default
+		driver_config_filename 		= "config_files/driver_config.xml"
+		carto_config_filename 		= "config_files/3d/localization_3d_outdoor.xml"
+		controller_config_filename 	= "~/sbongos/carto.conf"
+		run_driver					= "true"
+		run_carto 					= "false"
+		run_controller				= "false">
+	</Default>
+	<State_Mapping	
+		driver_config_filename 		= "config_files/loadbag.xml"
+		carto_config_filename 		= "config_files/3d/mapping_3d_outdoor.xml"
+		controller_config_filename 	= "~/sbongos/carto.conf"
+		run_driver					= "true"
+		run_carto 					= "true"
+		run_controller				= "false">
+	</State_Mapping>
+	<State_GatheringBaundry
+		driver_config_filename 		= "config_files/loadbag.xml"
+		carto_config_filename 		= "config_files/3d/localization_3d_outdoor.xml"
+		controller_config_filename 	= "~/sbongos/carto.conf"
+		run_driver					= "false"
+		run_carto 					= "false"
+		run_controller				= "false">
+	</State_GatheringBaundry>
+    <State_Transition
+        driver_config_filename      = "config_files/loadbag.xml"
+        carto_config_filename       = "config_files/3d/localization_3d_outdoor.xml"
+        controller_config_filename  = "~/sbongos/carto.conf"
+        run_driver                  = "false"
+        run_carto                   = "false"
+        run_controller              = "false">
+    </State_Transition>
+</STARTER>
