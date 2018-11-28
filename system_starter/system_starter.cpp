@@ -302,6 +302,16 @@ int32_t create_and_init_shm()
   g_ptr_shm->gps_sem_id = local_gps_sem_id;
   PRINT_INFO("gps semaphore init succeed!");
 
+  // lidar sem
+  int32_t local_lidar_sem_id = semget(BGS_LIDAR_SEM_KEY, 1, 0666 | IPC_CREAT);
+  if (-1 == local_lidar_sem_id || init_sem(local_lidar_sem_id, 0) < 0) {
+    starter_status.lidar_sem_init_succeed = FALSE;
+    destroy_shm();
+    return BGS_ERROR;
+  }
+  starter_status.lidar_sem_init_succeed = TRUE;
+  g_ptr_shm->lidar_sem_id = local_lidar_sem_id;
+  PRINT_INFO("lidar semaphore init succeed!");
   return BGS_OK;
 }
 

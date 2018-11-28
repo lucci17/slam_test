@@ -53,6 +53,7 @@ typedef struct {
   unsigned carto_sem_init_succeed : 1;
   unsigned imu_sem_init_succeed : 1;
   unsigned gps_sem_init_succeed : 1;
+  unsigned lidar_sem_init_succeed : 1;
 
   unsigned reserved : 27;
 } Status;

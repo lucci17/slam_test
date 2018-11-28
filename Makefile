@@ -5,6 +5,7 @@ COMMON_DIR := common
 TOOLCHAIN_DIR = /opt/arm-gcc-5.4.1/arm-linux-gnueabihf
 
 DRIVER_TARGET = driver
+STARTER_TARGET = starter
 
 ifeq ($(arch),arm)
   GCC = arm-linux-gnueabihf-g++
@@ -67,6 +68,7 @@ all:
 	$(MAKE) $(DRIVER_TARGET)
 	# 
 	#
+	$(MAKE) $(STARTER_TARGET)
 	#
 	
 # 自动生成头文件依赖关系的函数定义
@@ -120,6 +122,41 @@ $(OBJDIR)/%.d: $(RS_LIDAR_SRC)/%.cc
 $(OBJDIR)/%.o: $(RS_LIDAR_SRC)/%.cc
 	@echo $(ECHO_GREEN)"Building: "$@$(ECHO_NONE)
 	@ $(GCC) -c $(CXXFLAGS) $(DRIVER_INCS) $< -o $@
+
+
+###### SYSTEM STARTER ######
+PUGIDIR := third_parties/pugixml
+PCL_LIBS := -lpcl_common -lpcl_io  -lpcl_filters
+
+$(OBJDIR)/%.d: $(PUGIDIR)/%.cpp
+	$(call generate_d_file, $@, $(CARTO_INCS), $<)
+$(OBJDIR)/%.o: $(PUGIDIR)/%.cpp
+	@ echo $(ECHO_GREEN)"Building: "$@$(ECHO_NONE)
+	@ $(GCC) -c $(CXXFLAGS) $(CARTO_INCS) $< -o $@
+
+STARTER_DIR := system_starter
+STARTER_SRCS := $(wildcard $(STARTER_DIR)/*.cpp \
+$(PUGIDIR)/*.cpp $(COMMON_DIR)/*.cpp)
+STARTER_OBJS = $(foreach src_file, $(STARTER_SRCS), $(OBJDIR)/$(patsubst %.cpp,%.o,$(notdir $(src_file))))
+
+STARTER_LIBS = -lssl -lcrypto -lz -lpthread -lboost_system $(PCL_LIBS)
+STARTER_INCS := common third_parties $(PCL_INCLUDE) /usr/include/eigen3
+STARTER_INCS := $(foreach d, $(STARTER_INCS), -I$d)
+
+$(STARTER_TARGET): $(STARTER_OBJS)
+	@echo $(ECHO_GREEN)"\n  Targeting: "$@"\n"$(ECHO_NONE)
+	@ $(GCC) $^ $(CXXFLAGS) -o $(STARTER_TARGET) $(STARTER_LIBS)
+
+$(OBJDIR)/%.d: $(STARTER_DIR)/%.cpp
+	$(call generate_d_file, $@, $(STARTER_INCS), $<)
+$(OBJDIR)/%.o : $(STARTER_DIR)/%.cpp
+	@echo $(ECHO_GREEN)"Building: "$@$(ECHO_NONE)
+	@ $(GCC) -c $(CXXFLAGS) $(STARTER_INCS) $< -o $@
+	
+include_d_files := $(patsubst %.o,%.d,$(CARTO_OBJS))
+include_d_files += $(patsubst %.o,%.d,$(DRIVER_OBJS))
+include_d_files += $(patsubst %.o,%.d,$(STARTER_OBJS))
+-include $(include_d_files)
 
 .PHONY:clean
 clean:

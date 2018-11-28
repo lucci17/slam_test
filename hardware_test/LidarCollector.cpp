@@ -143,48 +143,48 @@ int32_t LMS1Collector::GetScanCfg(Bgs::LaserScanMsg *scan_msg)
   return BGS_OK;
 }
 
-void LMS1Collector::UpdateData()
-{
-  int32_t error_count = 0;
-  while (!_exit_thread_) {
-    if (!_init_finished_) {
-      msleep(10);
-      continue;
-    }
+// void LMS1Collector::UpdateData()
+// {
+//   int32_t error_count = 0;
+//   while (!_exit_thread_) {
+//     if (!_init_finished_) {
+//       msleep(10);
+//       continue;
+//     }
 
 
-    if (GetScanMsg(_laser_scan_.get()) == BGS_OK) {
-      int32_t ret = _callback_(_laser_scan_);
-      // int32_t ret = BGS_OK;
-      if (ret > 0) // 并没有报错，但是忽略这一次的操作
-      {
-        msleep(10);
-        continue;
-      } else if (ret == BGS_OK) {
+//     if (GetScanMsg(_laser_scan_.get()) == BGS_OK) {
+//       // int32_t ret = _callback_(_laser_scan_);
+//       int32_t ret = BGS_OK;
+//       if (ret > 0) // 并没有报错，但是忽略这一次的操作
+//       {
+//         msleep(10);
+//         continue;
+//       } else if (ret == BGS_OK) {
 
-      } else if (ret < 0)
-        error_count++;
-    } else
-      error_count++;
+//       } else if (ret < 0)
+//         error_count++;
+//     } else
+//       error_count++;
 
-    if (error_count > max_error_count) {
-      PRINT_ERROR(
-        "failed to get scan msg for several times. inner thread exit!");
-      on_error_();
-      break;
-    } else {
-      Bgs::msleep(10);
-      continue;
-    }
-  }
+//     if (error_count > max_error_count) {
+//       PRINT_ERROR(
+//         "failed to get scan msg for several times. inner thread exit!");
+//       on_error_();
+//       break;
+//     } else {
+//       Bgs::msleep(10);
+//       continue;
+//     }
+//   }
 
-  PRINT_INFO("lmx1xx thread exit.");
-}
+//   PRINT_INFO("lmx1xx thread exit.");
+// }
 
-void LMS1Collector::SetCallback(const LMS1Collector::LidarCallback2d &callback)
-{
-  _callback_ = callback;
-}
+// void LMS1Collector::SetCallback(const LMS1Collector::LidarCallback2d &callback)
+// {
+//   _callback_ = callback;
+// }
 
 int32_t LMS1Collector::GetPointCloud2Cfg(Bgs::PointCloud2Ptr &cloud)
 {

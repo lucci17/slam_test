@@ -147,7 +147,7 @@ int main(int argv, char **argc)
   int32_t i = 0;
   struct timespec ts;
   int32_t sem_error_count = 0;
-  // while (b_process_running) {
+  while (b_process_running) {
   //   // step1 等待信号量（来自 lidar thread）
   //   // 超时则判断 lidar thread 是否还在运行，如果没有运行则直接退出
   //   clock_gettime(CLOCK_REALTIME, &ts);
@@ -189,7 +189,8 @@ int main(int argv, char **argc)
   //     PRINT_DEBUG_FMT("lidar recieved for %d times!", sample_count);
   //     i = 0;
   //   }
-  // }
+    PRINT_DEBUG("lidar thread running");
+  }
 
   // step3 finish process
   process_exit(&driver_status);
@@ -695,7 +696,7 @@ int32_t init_sems(void)
     driver_status.lidar_sem_init_finished = FALSE;
   }
 
-  PRINT_DEBUG_FMT("gps sem id = %d", local_lidar_sem_id);
+  PRINT_DEBUG_FMT("lidar sem id = %d", local_lidar_sem_id);
 
   return BGS_OK;
 }
