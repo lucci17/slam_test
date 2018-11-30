@@ -2,7 +2,7 @@
 <robot name="cartographer_backpack_2d">
 	<link name="imu_link" />
 	<link name="horizontal_laser_link" />
-
+	<link name="single_gps_link" />
 	<link name="base_link" />
 	<joint name="imu_link_joint" type="fixed">
 		<parent link="base_link" />
@@ -13,6 +13,12 @@
 	<joint name="horizontal_laser_link_joint" type="fixed">
 		<parent link="base_link" />
 		<child link="horizontal_laser_link" />
+		<origin xyz="0 0.0 0.0" rpy=" 0.0 0.00 0.0"/>
+	</joint>
+
+	<joint name="single_gps_link_joint" type="fixed">
+		<parent link="base_link" />
+		<child link="single_gps_link" />
 		<origin xyz="0 0.0 0.0" rpy=" 0.0 0.00 0.0"/>
 	</joint>
 </robot>

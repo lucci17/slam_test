@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!-- supported start_state: 0 - "Default", 1 - "Mapping", 2 - "GatheringBaundry" -->
-<STARTER all_process_run_background 	= "true"
+<STARTER all_process_run_background 	= "false"
 		 server_port 					= "3000"
 		 driver_process_path 			= "./driver"
 		 carto_process_path 			= "./carto"
@@ -9,10 +9,10 @@
 	>
 	<Default
 		driver_config_filename 		= "config_files/driver_config.xml"
-		carto_config_filename 		= "config_files/3d/localization_3d_outdoor.xml"
+		carto_config_filename 		= "config_files/2d/mapping.xml"
 		controller_config_filename 	= "~/sbongos/carto.conf"
 		run_driver					= "true"
-		run_carto 					= "false"
+		run_carto 					= "true"
 		run_controller				= "false">
 	</Default>
 	<State_Mapping	

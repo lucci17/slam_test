@@ -2,7 +2,7 @@
 <!-- supported imu type: "lpms", "mpu9250" -->
 <!-- supported lidar type: "lslidar_n301", "sick_lms1xx", "robosense_16" -->
 <!-- supported motor type: "maxon", "geek", "double_geek" -->
-<DRIVER 	use_imu				= "false"
+<DRIVER 	use_imu				= "true"
 			use_motor			= "false"
 			use_gps				= "false"
 			use_lidar			= "true"
@@ -24,7 +24,7 @@
 			imu_update_freq 		= "100"
 			motor_update_freq		= "10"
 	  >
-	<SickLms1xx	ip = "192.168.0.1"
+	<SickLms1xx	ip = "10.0.0.20"
 				port = "2111">
 	</SickLms1xx>
 	<RoboSense	ip = "192.168.0.2"
