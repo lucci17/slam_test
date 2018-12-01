@@ -37,15 +37,37 @@ struct SickLmsConfig {
 
 struct DriverConfig {
   // flags
+  bool is_valid;
+  bool use_imu;
+  bool use_motor;
+  bool use_gps;
   bool use_lidar;
+  bool use_soft_interrput;
+  bool save_data_bag;
+  bool load_data_bag;
   bool wait_for_carto;
 
   // 目前我们支持两个雷达，暂时只支持 2d + 3d
   // 的方式，不支持两个2d雷达或者两个3d雷达的方案（ TODO ）
   LidarType main_lidar_type;
   LidarType the_other_lidar_type;
+  ImuType imu_type;
+  MotorType motor_type;
+
+  std::string imu_dev_path;
+  std::string gps_dev_path;
+
+  std::string motor_dev_path1;
+  std::string motor_dev_path2;
+
+  std::string data_bag_filaname; // 保存时使用的文件名
+  std::string load_bag_filename; // 载入的bag文件名
 
   int32_t max_secs_waiting_cmd;
+  int32_t imu_update_freq;
+  int32_t motor_update_freq;
+  int32_t load_bag_percentage; // 0 - 100
+
   SickLmsConfig sick_config;
   hardware::rslidar::driver::Config rsdriver_config;
   hardware::rslidar::rawdata::Config rsdriver_rawdata_config;
