@@ -199,55 +199,55 @@ private:
 ///
 /// it a class for 3d lidar
 /// robotsense rs16 / rs32
-// class RoboSenseCollector : public LidarCollector
-// {
-// private:
-//   std::shared_ptr<rslidar::driver::rslidarDriver> _lidar_;
-//   std::shared_ptr<rslidar::point_cloud::Convert> _convertor_;
+class RoboSenseCollector : public LidarCollector
+{
+private:
+  std::shared_ptr<rslidar::driver::rslidarDriver> _lidar_;
+  std::shared_ptr<rslidar::point_cloud::Convert> _convertor_;
 
-//   std::thread _thread_update_data_;
-//   bool _exit_thread_;
-//   bool _init_finished_;
-//   Bgs::PointCloud2Ptr _point_cloud2_;
-//   LidarCallback3d _callback_;
+  std::thread _thread_update_data_;
+  bool _exit_thread_;
+  bool _init_finished_;
+  Bgs::PointCloud2Ptr _point_cloud2_;
+  LidarCallback3d _callback_;
 
-// public:
-//   RoboSenseCollector(rslidar::driver::Config &driver_config,
-//                      rslidar::rawdata::Config &point_cloud_config,
-//                      Bgs::PointCloud2Ptr &point_cloud2_ptr,
-//                      LidarCallback3d callback)
-//       : _lidar_(new rslidar::driver::rslidarDriver(driver_config))
-//       , _convertor_(new rslidar::point_cloud::Convert(point_cloud_config))
-//       , _thread_update_data_(std::bind(&RoboSenseCollector::UpdateData, this))
-//       , _exit_thread_(false)
-//       , _init_finished_(false)
-//       , _point_cloud2_(point_cloud2_ptr)
-//       , _callback_(callback)
-//   {
-//     type_ = _3D_LIDAR_;
-//     _init_finished_ = true;
-//   }
+public:
+  RoboSenseCollector(rslidar::driver::Config &driver_config,
+                     rslidar::rawdata::Config &point_cloud_config,
+                     Bgs::PointCloud2Ptr &point_cloud2_ptr,
+                     LidarCallback3d callback)
+      : _lidar_(new rslidar::driver::rslidarDriver(driver_config))
+      , _convertor_(new rslidar::point_cloud::Convert(point_cloud_config))
+      , _thread_update_data_(std::bind(&RoboSenseCollector::UpdateData, this))
+      , _exit_thread_(false)
+      , _init_finished_(false)
+      , _point_cloud2_(point_cloud2_ptr)
+      , _callback_(callback)
+  {
+    type_ = _3D_LIDAR_;
+    _init_finished_ = true;
+  }
 
-//   ~RoboSenseCollector()
-//   {
-//     _convertor_.reset();
-//     _lidar_.reset();
-//     PRINT_INFO("destroy a robosense collector.");
-//   }
+  ~RoboSenseCollector()
+  {
+    _convertor_.reset();
+    _lidar_.reset();
+    PRINT_INFO("destroy a robosense collector.");
+  }
 
-//   int32_t Init(char host[], int32_t port);
-//   void DeInit();
-//   /// @warning you should not use the function, it is for a 2d lidar
-//   int32_t GetScanMsg(Bgs::LaserScanMsg *scan_msg) override;
-//   /// @warning you should not use the function, it is for a 2d lidar
-//   int32_t GetScanCfg(Bgs::LaserScanMsg *scan_msg) override;
+  int32_t Init(char host[], int32_t port);
+  void DeInit();
+  /// @warning you should not use the function, it is for a 2d lidar
+  int32_t GetScanMsg(Bgs::LaserScanMsg *scan_msg) override;
+  /// @warning you should not use the function, it is for a 2d lidar
+  int32_t GetScanCfg(Bgs::LaserScanMsg *scan_msg) override;
 
-//   int32_t GetPointCloud2Cfg(Bgs::PointCloud2Ptr &cloud) override;
-//   int32_t GetPointCloud2(Bgs::PointCloud2Ptr &cloud) override;
+  int32_t GetPointCloud2Cfg(Bgs::PointCloud2Ptr &cloud) override;
+  int32_t GetPointCloud2(Bgs::PointCloud2Ptr &cloud) override;
 
-//   /*!
-//    * @brief inner loop to update laser data ( for thread_update_data_ )
-//    */
-//   void UpdateData();
-// };
+  /*!
+   * @brief inner loop to update laser data ( for thread_update_data_ )
+   */
+  void UpdateData();
+};
 }

@@ -161,87 +161,87 @@ int32_t LMS1Collector::GetPointCloud2(Bgs::PointCloud2Ptr &cloud)
   return BGS_ERROR;
 }
 
-// int32_t RoboSenseCollector::Init(char host[], int32_t port)
-// {
-//   (void)host;
-//   (void)port;
+int32_t RoboSenseCollector::Init(char host[], int32_t port)
+{
+  (void)host;
+  (void)port;
 
-//   return BGS_OK;
-// }
+  return BGS_OK;
+}
 
-// void RoboSenseCollector::DeInit()
-// {
-//   _exit_thread_ = true;
-//   do {
-//     Bgs::msleep(10);
-//   } while (!_thread_update_data_.joinable());
-//   _thread_update_data_.join();
-// }
+void RoboSenseCollector::DeInit()
+{
+  _exit_thread_ = true;
+  do {
+    Bgs::msleep(10);
+  } while (!_thread_update_data_.joinable());
+  _thread_update_data_.join();
+}
 
-// int32_t RoboSenseCollector::GetScanMsg(Bgs::LaserScanMsg *scan_msg)
-// {
-//   PRINT_WARNING("it is a 3D lidar, cannot get a scan msg!");
-//   return BGS_ERROR;
-// }
-// int32_t RoboSenseCollector::GetScanCfg(Bgs::LaserScanMsg *scan_msg)
-// {
-//   PRINT_WARNING("it is a 3D lidar, cannot get a scan msg!");
-//   return BGS_ERROR;
-// }
+int32_t RoboSenseCollector::GetScanMsg(Bgs::LaserScanMsg *scan_msg)
+{
+  PRINT_WARNING("it is a 3D lidar, cannot get a scan msg!");
+  return BGS_ERROR;
+}
+int32_t RoboSenseCollector::GetScanCfg(Bgs::LaserScanMsg *scan_msg)
+{
+  PRINT_WARNING("it is a 3D lidar, cannot get a scan msg!");
+  return BGS_ERROR;
+}
 
-// int32_t RoboSenseCollector::GetPointCloud2Cfg(Bgs::PointCloud2Ptr &cloud)
-// {
-//   return BGS_OK;
-// }
+int32_t RoboSenseCollector::GetPointCloud2Cfg(Bgs::PointCloud2Ptr &cloud)
+{
+  return BGS_OK;
+}
 
-// int32_t RoboSenseCollector::GetPointCloud2(Bgs::PointCloud2Ptr &cloud)
-// {
-//   if (_lidar_ && _convertor_) {
-//     RslidarScanPtr scan(new RslidarScan);
-//     if (_lidar_->poll(scan))
-//       _convertor_->processScan(scan, cloud);
-//     else
-//       return BGS_ERROR;
-//   } else
-//     return BGS_ERROR;
+int32_t RoboSenseCollector::GetPointCloud2(Bgs::PointCloud2Ptr &cloud)
+{
+  if (_lidar_ && _convertor_) {
+    RslidarScanPtr scan(new RslidarScan);
+    if (_lidar_->poll(scan))
+      _convertor_->processScan(scan, cloud);
+    else
+      return BGS_ERROR;
+  } else
+    return BGS_ERROR;
 
-//   // 		PRINT_DEBUG_FMT("intensities: %lf", cloud->points[0].intensity );
-//   return BGS_OK;
-// }
+  // 		PRINT_DEBUG_FMT("intensities: %lf", cloud->points[0].intensity );
+  return BGS_OK;
+}
  
-// void RoboSenseCollector::UpdateData()
-// {
-//   int32_t error_count = 0;
-//   // 		const int32_t max_error_count = 5;
-//   while (!_exit_thread_) {
-//     if (!_init_finished_) {
-//       msleep(10);
-//       continue;
-//     }
-//     if (GetPointCloud2(_point_cloud2_) == BGS_OK) {
-//       int32_t ret = _callback_();
-//       if (ret > 0) // 并没有报错，但是忽略这一次的操作
-//       {
-//         msleep(10);
-//         continue;
-//       } else if (ret == BGS_OK) {
+void RoboSenseCollector::UpdateData()
+{
+  int32_t error_count = 0;
+  // 		const int32_t max_error_count = 5;
+  while (!_exit_thread_) {
+    if (!_init_finished_) {
+      msleep(10);
+      continue;
+    }
+    if (GetPointCloud2(_point_cloud2_) == BGS_OK) {
+      int32_t ret = _callback_();
+      if (ret > 0) // 并没有报错，但是忽略这一次的操作
+      {
+        msleep(10);
+        continue;
+      } else if (ret == BGS_OK) {
 
-//       } else if (ret < 0)
-//         error_count++;
-//     } else
-//       error_count++;
+      } else if (ret < 0)
+        error_count++;
+    } else
+      error_count++;
 
-//     if (error_count > max_error_count) {
-//       PRINT_ERROR(
-//         "failed to get point cloud msg for several times. inner thread exit!");
-//       on_error_();
-//       break;
-//     } else {
-//       Bgs::msleep(10);
-//       continue;
-//     }
-//   }
+    if (error_count > max_error_count) {
+      PRINT_ERROR(
+        "failed to get point cloud msg for several times. inner thread exit!");
+      on_error_();
+      break;
+    } else {
+      Bgs::msleep(10);
+      continue;
+    }
+  }
 
-//   PRINT_INFO("lidar thread exit.");
-// }
+  PRINT_INFO("lidar thread exit.");
+}
 }
